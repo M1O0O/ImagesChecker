@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^8.2.0",
+    "enmap": "^5.8.4",
+    "fs": "^0.0.1-security",
+    "fs-readdir-recursive": "^1.1.0",
+    "mysql": "^2.18.1"
+  },
+  "name": "imageschecker",
+  "description": "ImagesChecker",
+  "version": "0.0.1",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M1O0O/ImagesChecker.git"
+  },
+  "author": "M1000",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/M1O0O/ImagesChecker/issues"
+  },
+  "homepage": "https://github.com/M1O0O/ImagesChecker#readme"
+}
