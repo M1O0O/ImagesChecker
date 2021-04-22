@@ -1,11 +1,15 @@
 {
   "dependencies": {
+    "cron": "^1.8.2",
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
     "enmap": "^5.8.4",
     "fs": "^0.0.1-security",
     "fs-readdir-recursive": "^1.1.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "node-reverse-image-search": "^1.0.2",
+    "r": "^0.0.5",
+    "reverse-image-search": "^0.0.0"
   },
   "name": "imageschecker",
   "description": "ImagesChecker",

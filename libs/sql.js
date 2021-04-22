@@ -16,9 +16,46 @@ connection.connect(function (err) {
     console.log(`[SQL] - connected as id ${connection.threadId}`);
 });
 
-exports.tables = function (name, callback) {
-    connection.query("SHOW TABLES;", [id], function (error, results, fields) {
+exports.listChannels = function (server, callback) {
+    connection.query("SELECT * FROM `servers` WHERE `guild` = ?", [server], function (error, results, fields) {
         if (error) console.log(error);
-        callback(results)
+        callback(results[0].channelToCheck)
+    });
+};
+
+exports.addGuild = function (server) {
+    connection.query("INSERT INTO `servers`(`guild`, `channelToCheck`) VALUES (?, '[]')", [server], function (error, results, fields) {
+        if (error) console.log(error);
+    });
+};
+
+exports.removeChannel = function (channelToRemove, server) {
+    connection.query("SELECT * FROM `servers` WHERE `guild` = ?", [server], function (error, results, fields) {
+        if (error) console.log(error);
+
+        var channelsAfter = JSON.parse(results[0].channelToCheck);
+
+        var index = channelsAfter.indexOf(channelToRemove);
+
+        if (index > -1) {
+            channelsAfter.splice(index, 1);
+        }
+
+        connection.query("UPDATE `servers` SET `channelToCheck` = ? WHERE `guild` = ?", [JSON.stringify(channelsAfter), server], function (error, results, fields) {
+            if (error) console.log(error);
+        });
+    });
+};
+
+exports.addChannel = function (channelToAdd, server) {
+    connection.query("SELECT * FROM `servers` WHERE `guild` = ?", [server], function (error, results, fields) {
+        if (error) console.log(error);
+
+        var channelsAfter = JSON.parse(results[0].channelToCheck);
+        channelsAfter.push(channelToAdd);
+
+        connection.query("UPDATE `servers` SET `channelToCheck` = ? WHERE `guild` = ?", [JSON.stringify(channelsAfter), server], function (error, results, fields) {
+            if (error) console.log(error);
+        });
     });
 };
