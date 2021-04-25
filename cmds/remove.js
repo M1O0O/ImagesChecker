@@ -7,7 +7,8 @@ var options = {
             channel: "ID"
         }
     },
-    permission: ["MANAGE_CHANNELS"]
+    permission: ["MANAGE_CHANNELS"],
+    owner: true
 };
 
 module.exports = {

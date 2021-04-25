@@ -7,7 +7,7 @@
     "fs": "^0.0.1-security",
     "fs-readdir-recursive": "^1.1.0",
     "mysql": "^2.18.1",
-    "node-reverse-image-search": "^1.0.2",
+    "puppeteer": "^5.5.0",
     "r": "^0.0.5",
     "reverse-image-search": "^0.0.0"
   },
@@ -15,9 +15,6 @@
   "description": "ImagesChecker",
   "version": "0.0.1",
   "main": "src/main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/M1O0O/ImagesChecker.git"

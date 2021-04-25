@@ -1,10 +1,7 @@
-const reverseImageSearch = require('node-reverse-image-search'),
-    { MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi,
     regex = new RegExp(expression);
-
-
 
 module.exports = (client, message) => {
     if (message.author.bot) return;
@@ -19,7 +16,7 @@ module.exports = (client, message) => {
         if (message.content.match(regex)) {
             async function getUrls() {
                 for (const uri of message.content.match(regex)) {
-                    await reverseImageSearch(uri, async results => {
+                    await client.libs.verifyImages(uri, async results => {
                         urls[uri] = [];
 
                         await Object.assign(urls[uri], results);
@@ -36,7 +33,7 @@ module.exports = (client, message) => {
             getUrls();
         }
 
-        if (message.attachments.first()) reverseImageSearch(message.attachments.first()["url"], results => {
+        if (message.attachments.first()) client.libs.verifyImages(message.attachments.first()["url"], results => {
             var uri = message.attachments.first()["url"];
             urls[uri] = [];
 

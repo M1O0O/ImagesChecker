@@ -14,12 +14,17 @@ var mysql = require('mysql'),
 connection.connect(function (err) {
     if (err) return console.error('error connecting: ' + err.stack);
     console.log(`[SQL] - connected as id ${connection.threadId}`);
+    connection.query("SET wait_timeout=31536000;");
 });
 
 exports.listChannels = function (server, callback) {
     connection.query("SELECT * FROM `servers` WHERE `guild` = ?", [server], function (error, results, fields) {
         if (error) console.log(error);
-        callback(results[0].channelToCheck)
+        if (!results[0]){
+            exports.addGuild(server);
+            return callback("[]");
+        }
+        callback(results[0].channelToCheck);
     });
 };
 
@@ -57,5 +62,11 @@ exports.addChannel = function (channelToAdd, server) {
         connection.query("UPDATE `servers` SET `channelToCheck` = ? WHERE `guild` = ?", [JSON.stringify(channelsAfter), server], function (error, results, fields) {
             if (error) console.log(error);
         });
+    });
+};
+
+exports.delGuild = function (server) {
+    connection.query("DELETE FROM `servers` WHERE `guild` = ?", [server], function (error, results, fields) {
+        if (error) console.log(error);
     });
 };

@@ -7,7 +7,8 @@ var options = {
             channel: "ID du channel"
         }
     },
-    permission: ["MANAGE_CHANNELS"]
+    permission: ["MANAGE_CHANNELS"],
+    owner: true
 }, { MessageEmbed } = require('discord.js');
 
 module.exports = {
@@ -24,9 +25,7 @@ module.exports = {
                 var channelGet = message.guild.channels.cache.get(channel);
 
                 if (channelGet) embed.addField(channelGet.name, channel, true);
-                else {
-                    client.libs.sql.removeChannel(channel, message.guild.id)
-                }
+                else client.libs.sql.removeChannel(channel, message.guild.id);
             });
 
             message.reply(embed);
