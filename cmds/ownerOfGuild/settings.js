@@ -16,7 +16,7 @@ var options = {
 module.exports = {
     options: options,
 
-    run: async (client, message, args, lang, cmdlang) => {
+    run: async (client, message, args) => {
         var embed = new MessageEmbed()
             .setTitle('👻 Settings');
 

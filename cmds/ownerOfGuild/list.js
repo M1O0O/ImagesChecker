@@ -10,7 +10,7 @@ var options = {
 module.exports = {
     options: options,
 
-    run: async (client, message, args, lang, cmdlang) => {
+    run: async (client, message, args) => {
         client.libs.sql.listChannels(message.guild.id, channels => {
             channels = JSON.parse(channels);
             

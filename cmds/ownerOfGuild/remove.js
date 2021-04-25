@@ -13,7 +13,7 @@ var options = {
 module.exports = {
     options: options,
 
-    run: async (client, message, args, lang, cmdlang) => {
+    run: async (client, message, args) => {
         if (!args[0]) return message.reply(`Veulliez spécifié le channel`);
 
         var channelGet = message.guild.channels.cache.get(args[0]);

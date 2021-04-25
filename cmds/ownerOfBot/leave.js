@@ -14,7 +14,7 @@ var options = {
 module.exports = {
     options: options,
 
-    run: async (client, message, args, lang, cmdlang) => {
+    run: async (client, message, args) => {
         if (!args[0]) return message.reply(`Veulliez spécifié l'id du channel`);
 
         var guildGet = client.guilds.cache.get(args[0]);
