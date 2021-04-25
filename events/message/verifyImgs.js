@@ -44,20 +44,36 @@ module.exports = (client, message) => {
         });
 
         function next() {
-            var countWebSites = Object.values(urls)[0].length;
-            if (!(countWebSites > 0)) return;
-            message.react('⚠️');
+            client.libs.sql.getSettings(message.guild.id, settings => {
+                var countWebSites = Object.values(urls)[0].length;
+                if (!(countWebSites > 0)) return;
 
-            var embed = new MessageEmbed()
-                .setTitle('⚠️ Alert !')
-                .setDescription(`Un message ([Celui-ci](${message.url})) contient une image provenant d\'un/de site(s) internet !`)
-                .setColor('#fca503')
+                var embed = new MessageEmbed()
+                    .setAuthor(`${message.author.tag} ( ${message.author.id} )`, message.author.avatarURL(), null)
+                    .setColor('#fca503')
 
-            for (const WebSite of Object.values(urls)[0]) {
-                embed.addField(WebSite.title, WebSite.url, true);
-            }
+                if (settings.delete) embed.setDescription(`Un message contient une image provenant d\'un/de site(s) internet(s) !`)
+                else {
+                    message.react('⚠️');
+                    embed.setDescription(`Un message ([Celui-ci](${message.url})) contient une image provenant d\'un/de site(s) internet !`);
+                }
 
-            message.channel.send(embed);
+                for (const WebSite of Object.values(urls)[0]) {
+                    embed.addField(WebSite.title, WebSite.url, true);
+                }
+
+                if (settings.log_channel) {
+                    var channel = message.guild.channels.cache.get(settings.log_channel);
+
+                    if (!channel) {
+                        client.libs.sql.changeLogChannel(message.guild.id, null);
+                        message.channel.send(embed);
+                    } else channel.send(embed);
+
+                } else message.channel.send(embed);
+
+                if (settings.delete) message.delete();
+            });
         }
     });
 }

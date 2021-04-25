@@ -4,11 +4,8 @@ var options = {
     usage: {
         template: "help"
     },
-    permission: null,
-    owner: true
-};
-
-var { MessageEmbed } = require('discord.js');
+    permission: null
+}, { MessageEmbed } = require('discord.js');
 
 module.exports = {
     options: options,
@@ -22,15 +19,15 @@ module.exports = {
                 usage = cmd.options.usage.template,
                 permissions = cmd.options.permission;
 
-            if (cmd.options.name.includes("help")) return;
+            if (cmd.options.name.includes("help") || (cmd.options.owner)) return;
             if (!permissions) permissions = "@everyone";
 
             embed.setTitle('Liste des commandes')
                 .addFields(
-                    { name: "🍡 Name", value: name, inline: true },
-                    { name: "🦾 Description", value: description, inline: true },
-                    { name: "🦴 Usage", value: client.prefix + usage, inline: true },
+                    { name: "🍡 Nom", value: name.slice(2), inline: true },
                     { name: "💦 Permissions", value: permissions, inline: true },
+                    { name: "🦴 Utilisation", value: client.prefix + usage, inline: true },
+                    { name: "🦾 Description", value: description, inline: true },
                     { name: '\u200B', value: '\u200B' },
                 );
         });

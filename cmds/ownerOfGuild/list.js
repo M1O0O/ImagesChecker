@@ -2,13 +2,9 @@ var options = {
     name: "🌍 list",
     description: "Permet de voir quels channels seront vérifier",
     usage: {
-        template: "list [channel]",
-        args: {
-            channel: "ID du channel"
-        }
+        template: "list"
     },
-    permission: ["MANAGE_CHANNELS"],
-    owner: true
+    permission: ["MANAGE_CHANNELS"]
 }, { MessageEmbed } = require('discord.js');
 
 module.exports = {
@@ -17,7 +13,7 @@ module.exports = {
     run: async (client, message, args, lang, cmdlang) => {
         client.libs.sql.listChannels(message.guild.id, channels => {
             channels = JSON.parse(channels);
-
+            
             var embed = new MessageEmbed()
                 .setTitle('Voici les cannaux qui seront vérifier')
 

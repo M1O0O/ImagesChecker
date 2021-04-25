@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 var mysql = require('mysql'),
+    log = require('../libs/log'),
     connection = mysql.createConnection({
         host: process.env.SQL_HOST,
         user: process.env.SQL_USER,
@@ -13,18 +14,44 @@ var mysql = require('mysql'),
 
 connection.connect(function (err) {
     if (err) return console.error('error connecting: ' + err.stack);
-    console.log(`[SQL] - connected as id ${connection.threadId}`);
+    log(`_Reset_[_Violet_SQL_Reset_] - connected as id _Violet_${connection.threadId}`);
     connection.query("SET wait_timeout=31536000;");
 });
 
 exports.listChannels = function (server, callback) {
     connection.query("SELECT * FROM `servers` WHERE `guild` = ?", [server], function (error, results, fields) {
         if (error) console.log(error);
-        if (!results[0]){
+        if (!results[0]) {
             exports.addGuild(server);
             return callback("[]");
         }
         callback(results[0].channelToCheck);
+    });
+};
+
+exports.autoDeleteStat = function (server, callback) {
+    connection.query("SELECT * FROM `servers` WHERE `guild` = ?", [server], function (error, results, fields) {
+        if (error) console.log(error);
+        callback(results[0].delete);
+    });
+};
+
+exports.changeDeleteStat = function (server, newStats) {
+    connection.query("UPDATE `servers` SET `delete` = ? WHERE `guild` = ?", [newStats, server], function (error, results, fields) {
+        if (error) console.log(error);
+    });
+};
+
+exports.getSettings = function (server, callback) {
+    connection.query("SELECT * FROM `servers` WHERE `guild` = ?", [server], function (error, results, fields) {
+        if (error) console.log(error);
+        callback(results[0]);
+    });
+};
+
+exports.changeLogChannel = function (server, newChannel) {
+    connection.query("UPDATE `servers` SET `log_channel` = ? WHERE `guild` = ?", [newChannel, server], function (error, results, fields) {
+        if (error) console.log(error);
     });
 };
 

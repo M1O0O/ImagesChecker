@@ -4,31 +4,29 @@ var options = {
     usage: {
         template: "remove [channel]",
         args: {
-            channel: "ID"
+            channel: "ID ou Mention"
         }
     },
-    permission: ["MANAGE_CHANNELS"],
-    owner: true
+    permission: ["MANAGE_CHANNELS"]
 };
 
 module.exports = {
     options: options,
 
     run: async (client, message, args, lang, cmdlang) => {
-        if (!args[0]) return message.reply(`Veulliez spécifié l'id du channel`);
+        if (!args[0]) return message.reply(`Veulliez spécifié le channel`);
 
         var channelGet = message.guild.channels.cache.get(args[0]);
-
+        if (!channelGet) channelGet = message.guild.channels.cache.get(args[0].replace('<#', '').replace('>', ''));
+        
         if (channelGet) {
             client.libs.sql.listChannels(message.guild.id, channels => {
-                if (!channels.includes(args[0])) message.reply(`Le channel n'est pas dans la liste`);
+                if (!channels.includes(channelGet.id)) message.reply(`Le channel n'est pas dans la liste`);
                 else {
-                    client.libs.sql.removeChannel(args[0], message.guild.id);
+                    client.libs.sql.removeChannel(channelGet.id, message.guild.id);
                     message.react('✅');
                 }
             })
-        } else {
-            message.reply(`L'id du channel n'existe pas !`)
-        }
+        } else message.reply(`Le channel n'existe pas !`);
     }
 }

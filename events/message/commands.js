@@ -7,8 +7,8 @@ module.exports = (client, message) => {
         command = args.shift().toLowerCase(),
         cmd = client.commands.get(command);
 
-    if (!cmd) return;
-    if (message.channel.type != "text") return;
-    if (cmd.options.permission == null || cmd.options.permission.some(perm => message.member.hasPermission(perm))) return cmd.run(client, message, args, lang, lang.cmds[command]);
+    if (!cmd || message.channel.type != "text") return;
+
+    if (!cmd.options.owner) if (cmd.options.permission == null || cmd.options.permission.some(perm => message.member.hasPermission(perm))) return cmd.run(client, message, args, lang, lang.cmds[command]);
     if (cmd.options.owner && message.author.id == "696760040140570675") return cmd.run(client, message, args, lang, lang.cmds[command]);
 }

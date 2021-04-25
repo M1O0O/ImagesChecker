@@ -1,3 +1,3 @@
-module.exports = (client) => {
-    console.log(`[Discord] - connected as ${client.user.tag}`);
+module.exports = (client, err) => {
+    client.libs.log(`_Reset_[_Green_Discord_Reset_] - connected as _Green_${client.user.tag}`);
 }
