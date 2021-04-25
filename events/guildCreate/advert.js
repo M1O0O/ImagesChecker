@@ -11,7 +11,7 @@ module.exports = (client, guild) => {
     }
 
     embed.setTitle('Première utilisation')
-        .setDescription(`Hey, merci de soutenir le bot en l'ajoutant sur votre serveur, pour voir les commandes faite \**help\*`)
+        .setDescription(`Hey, merci de soutenir le bot en l'ajoutant sur votre serveur, pour voir les commandes faite \`*help\``)
         .addField("🍡 Library's", packagesLibraryMsg, true)
         .addField("🦾 Author", "M1000#0008", true)
         .addField("🥖 Prefix", client.prefix, true)
