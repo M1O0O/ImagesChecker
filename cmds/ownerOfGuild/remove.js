@@ -17,7 +17,7 @@ module.exports = {
         if (!args[0]) return message.reply(`Veulliez spécifié le channel`);
 
         if (args[0].toLowerCase() != "this") var channelGet = message.guild.channels.cache.get(args[0]);
-        var channelGet = message.guild.channels.cache.get(args[0]);
+        else var channelGet = message.channel;
         if (!channelGet) channelGet = message.guild.channels.cache.get(args[0].replace('<#', '').replace('>', ''));
         
         if (channelGet) {
